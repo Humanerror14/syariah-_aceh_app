@@ -33,11 +33,11 @@ export function ZakatTab() {
           <h2 className="text-xs uppercase tracking-[0.4em] text-secondary font-bold mb-3">Manajemen Keuangan</h2>
           <h1 className="text-4xl lg:text-5xl font-extrabold text-primary leading-tight">Pengelolaan <br /> Zakat Syariah</h1>
         </div>
-        <div className="text-right hidden lg:block">
-          <p className="text-xs text-slate-400 uppercase tracking-widest mb-1">Status Pasar Emas</p>
-          <p className="text-2xl font-serif font-bold text-maqam-text">
+        <div className="text-left lg:text-right">
+          <p className="text-[10px] text-slate-400 uppercase tracking-widest mb-1">Status Pasar Emas</p>
+          <p className="text-xl lg:text-2xl font-serif font-bold text-maqam-text">
             {loadingPrice ? 'Syncing...' : formatIDR(goldPrice)}
-            <span className="text-sm text-slate-400 font-sans font-normal ml-1">/gr</span>
+            <span className="text-xs text-slate-400 font-sans font-normal ml-1">/gr</span>
           </p>
         </div>
       </div>

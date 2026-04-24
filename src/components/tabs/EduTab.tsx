@@ -74,63 +74,70 @@ function ArticleDetail({ article, onBack }: { article: Article; onBack: () => vo
         <ChevronLeft size={16} /> Kembali ke Daftar
       </button>
 
-      <div className="max-w-3xl mx-auto space-y-10">
+      <div className="max-w-3xl mx-auto space-y-8">
         {/* Header */}
-        <div className="text-center space-y-4">
-          <span className="text-xs font-bold tracking-[0.4em] text-secondary border border-secondary/20 px-3 py-1.5 rounded-full bg-secondary/5 inline-block uppercase italic">
-            {article.tag}
-          </span>
-          <h1 className="text-4xl lg:text-5xl font-serif font-extrabold text-maqam-text leading-tight">
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] font-bold tracking-widest text-secondary uppercase bg-secondary/10 px-2 py-0.5 rounded">
+              {article.tag}
+            </span>
+          </div>
+          <h1 className="text-3xl lg:text-5xl font-serif font-extrabold text-primary leading-[1.1] tracking-tight">
             {article.title}
           </h1>
-          <div className="w-12 h-1 bg-secondary/30 mx-auto rounded-full" />
+          <div className="flex items-center gap-3 text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+            <span>Pedoman Syariah Aceh</span>
+            <span>•</span>
+            <span>2 Menit Baca</span>
+          </div>
         </div>
 
         {/* Thumbnail */}
-        <div className="relative h-64 lg:h-96 rounded-3xl overflow-hidden shadow-xl max-w-2xl mx-auto">
-          <img src={article.thumbnail} alt={article.title} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-3xl" />
+        <div className="space-y-2">
+          <div className="rounded-2xl overflow-hidden bg-surface-low aspect-video lg:aspect-[21/9]">
+            <img src={article.thumbnail} alt={article.title} className="w-full h-full object-cover" />
+          </div>
+          <p className="text-[10px] text-slate-400 italic text-center">Foto: Dokumentasi Syariah Aceh / Ilustrasi Artikel</p>
         </div>
 
-        {/* Content Card */}
-        <div className="maqam-card !p-8 lg:!p-12 !rounded-[2rem] border-2 border-surface-high shadow-2xl bg-surface-lowest">
-          <div className="w-full overflow-visible">
-            <p className="text-maqam-text leading-[1.8] text-xl lg:text-2xl whitespace-pre-wrap font-sans font-medium">
+        {/* Content Section */}
+        <div className="prose prose-slate max-w-none">
+          <div className="w-full">
+            <p className="text-maqam-text leading-[1.7] text-sm lg:text-base whitespace-pre-wrap font-sans font-medium text-justify">
               {article.content}
             </p>
           </div>
 
-
           {/* PDF Reference */}
           {article.pdfUrl && (
-            <div className="mt-8 p-6 bg-surface-low border border-surface-high rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-4 text-center sm:text-left">
-                <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-600 shadow-sm shrink-0">
-                  <FileText size={24} />
+            <div className="my-12 p-6 bg-surface-low border-l-4 border-primary rounded-r-2xl flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                  <FileText size={20} />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-primary">Referensi Fatwa &amp; Dokumen Resmi</p>
-                  <p className="text-xs text-slate-400">Silakan unduh untuk mempelajari lebih lanjut.</p>
+                  <p className="text-xs font-bold text-primary">Dokumen Referensi Resmi</p>
+                  <p className="text-[10px] text-slate-400">Fatwa & Pedoman Faraidh</p>
                 </div>
               </div>
               <a
                 href={article.pdfUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-primary text-white rounded-xl text-xs font-bold hover:bg-primary-container transition-all shadow-lg shadow-primary/10"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2.5 bg-primary text-white rounded-lg text-[10px] font-bold hover:bg-emerald-900 transition-all uppercase tracking-widest"
               >
-                Buka Dokumen PDF <ExternalLink size={14} />
+                Unduh PDF <ExternalLink size={12} />
               </a>
             </div>
           )}
 
-          {/* Footer */}
-          <div className="mt-12 pt-8 border-t border-surface-high flex flex-col sm:flex-row items-center justify-end gap-6">
+          {/* Footer Navigation */}
+          <div className="mt-16 pt-8 border-t border-slate-100 flex justify-center">
             <button
               onClick={onBack}
-              className="w-full sm:w-auto bg-surface-high text-primary px-8 py-3 rounded-xl font-bold text-sm hover:bg-secondary/20 transition-all flex items-center justify-center gap-2"
+              className="text-xs font-bold text-slate-400 hover:text-primary transition-colors flex items-center gap-2 uppercase tracking-widest"
             >
-              <ChevronLeft size={16} /> Kembali ke Daftar
+              <ChevronLeft size={16} /> Kembali ke Indeks Artikel
             </button>
           </div>
         </div>

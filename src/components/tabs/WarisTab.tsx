@@ -160,22 +160,22 @@ export function WarisTab() {
                 <h3 className="text-sm font-bold text-primary uppercase tracking-widest mb-6">Rincian Pembagian Ahli Waris</h3>
                 <div className="space-y-4">
                   {warisResult.details.map((detail, idx) => (
-                    <div key={idx} className="flex items-center justify-between p-4 bg-surface-low rounded-xl hover:bg-surface-lowest hover:shadow-md transition-all group">
+                    <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-surface-low rounded-xl hover:bg-surface-lowest hover:shadow-md transition-all group gap-4">
                       <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-full bg-surface-lowest border border-surface-high flex items-center justify-center text-primary font-bold text-xs ring-4 ring-surface-low">
+                        <div className="w-10 h-10 rounded-full bg-surface-lowest border border-surface-high flex items-center justify-center text-primary font-bold text-xs shrink-0">
                           {idx + 1}
                         </div>
                         <div>
-                          <h4 className="font-bold text-primary">{detail.label}</h4>
-                          <div className="flex items-center gap-2">
+                          <h4 className="font-bold text-primary text-sm sm:text-base">{detail.label}</h4>
+                          <div className="flex items-center gap-2 mt-0.5">
                             <span className="text-[10px] font-bold text-secondary">{detail.fraction}</span>
-                            <span className="text-[10px] font-bold text-slate-400">|</span>
+                            <span className="text-[10px] font-bold text-slate-300">|</span>
                             <span className="text-[10px] font-bold text-slate-400">{(detail.percentage * 100).toFixed(2)}%</span>
                           </div>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-lg font-bold text-primary">
+                      <div className="sm:text-right pl-14 sm:pl-0 border-l-2 sm:border-l-0 border-secondary/20 sm:border-transparent">
+                        <div className="text-xl font-serif font-bold text-primary">
                           {formatIDR(Math.floor(detail.nominal))}
                         </div>
                       </div>
