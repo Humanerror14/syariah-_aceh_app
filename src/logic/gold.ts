@@ -12,40 +12,53 @@ export interface GoldPriceResponse {
   success: boolean;
 }
 
-export const fetchGoldPrice = async (): Promise<number> => {
-  // Try CoinGecko PAXG (Gold-backed token) first - Very reliable for IDR directly
+const FALLBACK_GOLD_PRICE = 1450000;
+
+/**
+ * Fetch with timeout helper
+ */
+async function fetchWithTimeout(url: string, options: RequestInit = {}, timeout = 4000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
   try {
-    const response = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold&vs_currencies=idr'));
+    const response = await fetch(url, { ...options, signal: controller.signal });
+    clearTimeout(id);
+    return response;
+  } catch (error) {
+    clearTimeout(id);
+    throw error;
+  }
+}
+
+export const fetchGoldPrice = async (): Promise<number> => {
+  // 1. Try CoinGecko PAXG directly (Fastest & Reliable)
+  try {
+    const response = await fetchWithTimeout('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold&vs_currencies=idr');
     if (response.ok) {
-      const wrapper = await response.json();
-      const data = JSON.parse(wrapper.contents);
+      const data = await response.json();
       const idrPerOunce = data['pax-gold'].idr;
-      const TROY_OUNCE_TO_GRAM = 31.1034768;
-      return Math.round(idrPerOunce / TROY_OUNCE_TO_GRAM);
+      return Math.round(idrPerOunce / 31.1034768);
     }
   } catch (e) {
-    console.warn('CoinGecko fetch failed, trying secondary API...', e);
+    console.warn('Primary Gold API slow or failed, trying backup...');
   }
 
-  // Secondary backup: Gold-API + Forex API
+  // 2. Secondary backup: Parallel fetches for Speed
   try {
-    const goldResponse = await fetch('https://api.gold-api.com/price/XAU');
-    const forexResponse = await fetch('https://open.er-api.com/v6/latest/USD');
+    const [goldRes, forexRes] = await Promise.all([
+      fetchWithTimeout('https://api.gold-api.com/price/XAU'),
+      fetchWithTimeout('https://open.er-api.com/v6/latest/USD')
+    ]);
     
-    if (goldResponse.ok && forexResponse.ok) {
-      const goldData = await goldResponse.json();
-      const forexData = await forexResponse.json();
+    if (goldRes.ok && forexRes.ok) {
+      const goldData = await goldRes.json();
+      const forexData = await forexRes.json();
       
-      const usdPerOunce = goldData.price;
-      const idrRate = forexData.rates.IDR;
-      
-      const TROY_OUNCE_TO_GRAM = 31.1034768;
-      const idrPerGram = (usdPerOunce / TROY_OUNCE_TO_GRAM) * idrRate;
-      
+      const idrPerGram = (goldData.price / 31.1034768) * forexData.rates.IDR;
       return Math.round(idrPerGram);
     }
   } catch (error) {
-    console.error('All gold APIs failed, using fallback:', error);
+    console.error('All gold APIs failed or timed out:', error);
   }
 
   return FALLBACK_GOLD_PRICE;
