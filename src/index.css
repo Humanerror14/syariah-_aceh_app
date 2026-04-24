@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #003527;
+  --color-primary-container: #064e3b;
+  --color-secondary: #C5A059;
+  --color-secondary-container: #fed488;
+  --color-surface: #f7faf8;
+  --color-surface-low: #f1f4f2;
+  --color-surface-lowest: #ffffff;
+  --color-surface-high: #ebefed;
+  --color-maqam-text: #181c1b;
+  --shadow-ambient: 0 10px 40px -10px rgba(24, 28, 27, 0.04);
+}
+
+.dark {
+  --color-primary: #0AC793;
+  --color-primary-container: #052e23;
+  --color-secondary: #D4AF37;
+  --color-secondary-container: #4a3b1a;
+  --color-surface: #011A13;
+  --color-surface-low: #02241A;
+  --color-surface-lowest: #052e23;
+  --color-surface-high: #074031;
+  --color-maqam-text: #E5E9E7;
+  --shadow-ambient: 0 10px 40px -10px rgba(0, 0, 0, 0.4);
+}
+
+@theme {
+  --color-primary: var(--color-primary);
+  --color-primary-container: var(--color-primary-container);
+  --color-secondary: var(--color-secondary);
+  --color-secondary-container: var(--color-secondary-container);
+  --color-surface: var(--color-surface);
+  --color-surface-low: var(--color-surface-low);
+  --color-surface-lowest: var(--color-surface-lowest);
+  --color-surface-high: var(--color-surface-high);
+  
+  --color-maqam-emerald: var(--color-primary);
+  --color-maqam-gold: var(--color-secondary);
+  --color-maqam-paper: var(--color-surface);
+  --color-maqam-text: var(--color-maqam-text);
+
+  --font-serif: "Noto Serif", serif;
+  --font-sans: Manrope, sans-serif;
+
+  --shadow-ambient: var(--shadow-ambient);
+}
+
+
+@layer base {
+  body {
+    @apply bg-surface text-maqam-text font-sans antialiased selection:bg-secondary/30;
+    background-image: 
+      radial-gradient(circle at 0% 0%, rgba(0, 53, 39, 0.03) 0%, transparent 40%),
+      radial-gradient(circle at 100% 100%, rgba(197, 160, 89, 0.03) 0%, transparent 40%);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+
+  /* Dynamic & Animated Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-low;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/20 transition-all duration-500;
+    border-radius: 10px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-secondary/50;
+    border: 2px solid transparent;
+  }
+
+  /* For Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 53, 39, 0.2) transparent;
+  }
+}
+
+@layer components {
+  .maqam-card {
+    @apply bg-surface-lowest rounded-2xl p-8 shadow-ambient transition-all duration-300;
+  }
+
+  .maqam-nav-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-slate-500 hover:text-primary hover:bg-surface-high;
+  }
+
+  .maqam-nav-item-active {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-primary bg-surface-high font-semibold shadow-sm;
+  }
+
+  /* Interactive Multi-State Input */
+  .maqam-input {
+    @apply w-full bg-surface-high border-2 border-transparent rounded-xl p-4 text-maqam-text transition-all duration-300 outline-none;
+    @apply hover:bg-surface-lowest hover:border-primary/20 hover:shadow-md;
+    @apply focus:bg-surface-lowest focus:border-secondary focus:ring-2 focus:ring-secondary/40 focus:shadow-xl focus:scale-[1.01];
+  }
+
+  /* Pulse animation for active input container */
+  .input-focus-ring {
+    @apply absolute inset-0 rounded-xl pointer-events-none opacity-0 transition-opacity duration-300;
+    border: 2px solid theme('colors.secondary.DEFAULT');
+  }
+
+  .maqam-input:focus + .input-focus-ring {
+    @apply opacity-100;
+    animation: ring-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes ring-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.1; transform: scale(1.02); }
+}
+
+/* Custom Glassmorphism */
+.maqam-glass {
+  @apply backdrop-blur-xl bg-surface/70 border-none shadow-ambient;
+}
+
+/* Hide default number spinners for a cleaner look */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
