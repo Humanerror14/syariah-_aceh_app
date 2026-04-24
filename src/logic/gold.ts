@@ -12,7 +12,7 @@ export interface GoldPriceResponse {
   success: boolean;
 }
 
-const FALLBACK_GOLD_PRICE = 1450000;
+
 
 /**
  * Fetch with timeout helper
