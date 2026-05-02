@@ -19,11 +19,16 @@ export const useWarisStore = create<WarisState>((set) => ({
   warisDebts: '0',
   warisBequests: '0',
   warisHeirs: {
-    husband: false, wife: false,
-    sons: 0, daughters: 0,
+    husband: false, wives: 0,
     father: false, mother: false,
+    grandfather: false, grandmotherMaternal: false, grandmotherPaternal: false,
+    sons: 0, daughters: 0, grandsons: 0, granddaughters: 0,
     fullBrothers: 0, fullSisters: 0,
-    grandfather: false, grandmother: false
+    consanguineBrothers: 0, consanguineSisters: 0,
+    uterineBrothers: 0, uterineSisters: 0,
+    fullNephews: 0, consanguineNephews: 0,
+    fullUncles: 0, consanguineUncles: 0,
+    fullCousins: 0, consanguineCousins: 0
   },
   warisResult: null,
   setWarisAssets: (assets) => set({ warisAssets: assets }),
