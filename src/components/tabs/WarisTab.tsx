@@ -90,9 +90,9 @@ export function WarisTab() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 2xl:grid-cols-12 gap-8">
         {/* Inputs Sidebar */}
-        <div className="xl:col-span-5 space-y-6">
+        <div className="2xl:col-span-5 space-y-6">
           <div className="maqam-card space-y-4">
             <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">1. Data Harta</h3>
             <div className="space-y-3">
@@ -211,9 +211,9 @@ export function WarisTab() {
         </div>
 
         {/* Results Display */}
-        <div className="xl:col-span-7 space-y-6">
+        <div className="2xl:col-span-7 space-y-6">
           {!warisResult ? (
-            <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-center p-12 border-2 border-dashed border-surface-high rounded-3xl bg-surface-low/30 sticky top-6">
+            <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-center p-12 border-2 border-dashed border-surface-high rounded-3xl bg-surface-low/30 2xl:sticky 2xl:top-6">
               <div className="w-16 h-16 bg-surface-lowest rounded-2xl shadow-xl flex items-center justify-center mb-6">
                 <Scale className="text-slate-200" size={32} />
               </div>
@@ -221,7 +221,7 @@ export function WarisTab() {
               <p className="text-slate-400 text-sm max-w-xs mx-auto mt-2">Silakan isi data ahli waris secara teliti dan klik tombol hitung untuk melihat rincian pembagian.</p>
             </div>
           ) : (
-            <div className="space-y-6 sticky top-6">
+            <div className="space-y-6 2xl:sticky 2xl:top-6">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="sm:col-span-2 bg-emerald-900/80 backdrop-blur-xl p-6 rounded-2xl text-white shadow-xl shadow-emerald-900/10">
                   <p className="text-[10px] uppercase font-bold text-emerald-200/50 mb-1">Harta Bersih Yang Dibagi</p>
@@ -243,7 +243,7 @@ export function WarisTab() {
                 
                 <div className="space-y-3">
                   {warisResult.details.filter(d => d.status === 'Mendapat Bagian').map((detail, idx) => (
-                    <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-surface-lowest border border-slate-100 rounded-xl hover:shadow-md transition-all group gap-4 relative overflow-hidden">
+                    <div key={idx} className="flex flex-col lg:flex-row lg:items-center justify-between p-4 bg-surface-lowest border border-slate-100 rounded-xl hover:shadow-md transition-all group gap-4 relative overflow-hidden">
                       <div className="absolute left-0 top-0 bottom-0 w-1 bg-secondary rounded-l-xl"></div>
                       <div className="flex items-center gap-4 pl-2">
                         <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary font-bold text-xs shrink-0">
@@ -263,7 +263,7 @@ export function WarisTab() {
                           </div>
                         </div>
                       </div>
-                      <div className="sm:text-right pl-16 sm:pl-0">
+                      <div className="lg:text-right pl-16 lg:pl-0">
                         <div className="text-xl font-serif font-bold text-primary">
                           {formatIDR(Math.floor(detail.nominal))}
                         </div>
